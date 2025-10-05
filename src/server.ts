@@ -19,9 +19,7 @@ app.get('/', (req, res) => {
 })
 
 
-app.listen(config.port, () => {
-    console.log(`Assingment-3 Server is running on port ${config.port}`);
-})
+
 
 
 async function server() {
@@ -29,10 +27,13 @@ async function server() {
 
         await mongoose.connect(config.database_url!);
         console.log('Connected to MongoDB using mongoose');
-
+        app.listen(config.port, () => {
+            console.log(`Assingment-3 Server is running on port ${config.port}`);
+        })
 
     } catch (error) {
-        console.log("Server Error", error);
+        console.error('Failed to connect to MongoDB:', error);
+        process.exit(1);
     }
 }
 
