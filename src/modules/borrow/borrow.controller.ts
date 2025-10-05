@@ -21,17 +21,18 @@ const postBorrowBook = async (req: Request, res: Response) => {
         await book.save();
 
         const borrowBook = await Borrow.create({ book: bookId, quantity, dueDate });
-        res.send({
+        res.json({
             success: true,
             message: "Book borrowed successfully",
             data: borrowBook
         })
-    } catch (error) {
-        res.send({
+    } catch (error: any) {
+        console.error('Borrow book error:', error);
+        res.status(500).json({
             success: false,
             message: "Error making borrow request",
-            error
-        })
+            error: error.message || error
+        });
     }
 
 }
@@ -70,8 +71,13 @@ const getBorrowedSummary = async (_req: Request, res: Response): Promise<void> =
             message: 'Borrowed books summary retrieved successfully',
             data: summary
         });
-    } catch (error) {
-        res.status(500).json({ success: false, message: 'Summary failed', error });
+    } catch (error: any) {
+        console.error('Borrow summary error:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Summary failed',
+            error: error.message || error
+        });
     }
 };
 
