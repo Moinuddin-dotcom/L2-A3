@@ -1,5 +1,5 @@
 import { model, Schema } from "mongoose";
-import { IBorrow } from "./borrow.tnterface";
+import { IBorrow } from "./borrow.interface";
 
 const borrowSchema = new Schema<IBorrow>({
     book: { type: Schema.Types.ObjectId, ref: 'Books', required: true },
